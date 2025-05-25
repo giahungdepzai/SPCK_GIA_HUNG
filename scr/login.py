@@ -1,7 +1,7 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit, QVBoxLayout
-from PyQt6.QtGui import QPalette, QColor
-from qtwidgets import AnimatedToggle
+import json
+from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt6 import uic
 
 class Login(QMainWindow):
@@ -24,35 +24,33 @@ class Login(QMainWindow):
         self.registerWindow.show()
         self.hide()
 
-    def Login(self):
-        email = self.txtEmail.text()
-        password = self.txtPassword.text()
-        
-        if email == 'Admin' and password == 'Admin':
-            if self.homePageWindow == None:
+def Login(self):
+    email = self.txtEmail.text().strip()
+    password = self.txtPassword.text().strip()
+
+    try:
+        with open('users.json', 'r', encoding='utf-8') as f:
+            users = json.load(f)
+    except FileNotFoundError:
+        QMessageBox.critical(self, "Lỗi", "Không tìm thấy file users.json")
+        return
+
+    for user in users:
+        if user["email"] == email and user["password"] == password:
+            # Nếu đúng, mở trang chủ
+            if self.homePageWindow is None:
                 from homepage import HomePage
                 self.homePageWindow = HomePage()
-            
+
             self.homePageWindow.show()
             self.hide()
+            return
+
+    # Nếu không khớp
+    QMessageBox.warning(self, "Đăng nhập thất bại", "Email hoặc mật khẩu không đúng.")
 
     def show_password(self):
         if self.chuxShowPassword.isChecked():
             self.txtPassword.setEchoMode(QLineEdit.EchoMode.Normal)
         else:
             self.txtPassword.setEchoMode(QLineEdit.EchoMode.Password)
-
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        uic.loadUi("C:/Users/DO MANH HUNG/Documents/Zalo Received Files/New folder/gui.ui", self)
-
-        # Tạo toggle switch
-        toggle = AnimatedToggle(checked_color="#7F1DFF", pulse_checked_color="#F5F5FF")
-
-        # Gắn toggle vào frame đã tạo trong Qt Designer (đảm bảo self.frame là QFrame)
-        layout = QVBoxLayout()
-        layout.addWidget(toggle)
-
-        # Gắn layout cho frame
-        self.frame.setLayout(layout)
