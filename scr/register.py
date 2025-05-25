@@ -1,3 +1,4 @@
+import json
 from PyQt6.QtWidgets import QMainWindow, QLineEdit
 from PyQt6 import uic 
 
@@ -9,18 +10,33 @@ class Register(QMainWindow):
         self.btnLogin.clicked.connect(self.OpenLoginForm)
         self.loginWindow = None
     
-    def Login(self):
-        fullname = self.txtfullname.text()
-        email = self.txtEmail.text()
-        password = self.txtPassword.text()
+    def xu_ly_dang_ky(self):
+        txtUsername = self.txtUsername.text().strip()
+        txtpass = self.txtpass.text().strip()
+        txtRepass = self.txtRepass.text().strip()
         
-        if email == 'Admin' and password == 'Admin' and fullname == 'Admin':
-            if self.loginWindow == None:
-                from login import Login
-                self.loginWindow = Login()
+        if txtUsername == "" or txtpass == "" or txtRepass == "":
+            self.thongBao("Thông báo", "Vui lòng nhập đầy đủ thông tin")
+            return
+        
+        if txtpass != txtRepass:
+            self.thongBao("Thông báo", "Mật khẩu không trùng khớp")
+            return
+        
+        with open("code/account.json", "r") as file:
+            data = json.load(file)
             
-            self.loginWindow.show()
-            self.hide()
+        for item in data["accounts"]:
+            if item["username"] == txtUsername:
+                self.thongBao("Thông báo", "Tài khoản đã tồn tại")
+                return
+            
+        data["accounts"].append(dict(username = txtUsername, password = txtpass,balance = 0))
+        with open("code/account.json", "w") as file:
+            json.dump(data, file, indent=4)
+            self.thongBao("Thông báo", "Đăng ký tài khoản thành công")
+        self.Home()
+
 
         
     def OpenLoginForm(self):

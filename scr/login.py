@@ -24,30 +24,36 @@ class Login(QMainWindow):
         self.registerWindow.show()
         self.hide()
 
-def Login(self):
-    email = self.txtEmail.text().strip()
-    password = self.txtPassword.text().strip()
+    def xu_ly_dang_nhap(self):
+        """Xử lý đăng nhập bằng cách kiểm tra thông tin tài khoản"""
+        username = self.txtUsername.text()
+        password = self.txtpass.text()
 
-    try:
-        with open('users.json', 'r', encoding='utf-8') as f:
-            users = json.load(f)
-    except FileNotFoundError:
-        QMessageBox.critical(self, "Lỗi", "Không tìm thấy file users.json")
-        return
+        try:
+            # Đọc file JSON chứa danh sách tài khoản
+            with open("code/account.json", "r") as file:
+                data = json.load(file)
 
-    for user in users:
-        if user["email"] == email and user["password"] == password:
-            # Nếu đúng, mở trang chủ
-            if self.homePageWindow is None:
-                from homepage import HomePage
-                self.homePageWindow = HomePage()
+            # Duyệt qua tất cả các tài khoản trong danh sách
+            for account in data["accounts"]:
+                if account["username"] == username and account["password"] == password:
+                    # Nếu thông tin đúng, lưu tài khoản hiện tại vào file current_account.json
+                    with open("code/current_account.json", "w") as file:
+                        json.dump({"current_account": username}, file, indent=4)
 
-            self.homePageWindow.show()
-            self.hide()
-            return
+                    # Mở cửa sổ Home
+                    from homepage import Home
+                    self.homewindow = Home()
+                    self.homewindow.show()
+                    self.close()
+                    return
 
-    # Nếu không khớp
-    QMessageBox.warning(self, "Đăng nhập thất bại", "Email hoặc mật khẩu không đúng.")
+            # Nếu không tìm thấy tài khoản phù hợp
+            QMessageBox.critical(self, "Lỗi", "Sai tên đăng nhập hoặc mật khẩu")
+        except FileNotFoundError:
+            QMessageBox.critical(self, "Lỗi", "Không tìm thấy file account.json")
+        except json.JSONDecodeError:
+            QMessageBox.critical(self, "Lỗi", "File account.json bị lỗi định dạng")
 
     def show_password(self):
         if self.chuxShowPassword.isChecked():
