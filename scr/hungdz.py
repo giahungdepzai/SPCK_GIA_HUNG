@@ -1,0 +1,1 @@
+print("hung sieu cap dep trai")
