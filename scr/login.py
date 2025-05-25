@@ -1,6 +1,7 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit
+import sys
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit, QVBoxLayout
 from PyQt6.QtGui import QPalette, QColor
-from PyQt6.QtCore import Qt
+from qtwidgets import AnimatedToggle
 from PyQt6 import uic
 
 class Login(QMainWindow):
@@ -44,33 +45,14 @@ class Login(QMainWindow):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        uic.loadUi("C:/Users/DO MANH HUNG/Documents/Zalo Received Files/New folder/gui.ui", self)
 
-        self.dark_mode = False
-        self.ui.btnToggleTheme.clicked.connect(self.toggle_theme)
+        # Tạo toggle switch
+        toggle = AnimatedToggle(checked_color="#7F1DFF", pulse_checked_color="#F5F5FF")
 
-    def toggle_theme(self):
-        if not self.dark_mode:
-            # Chuyển sang dark mode
-            dark_palette = QPalette()
-            dark_palette.setColor(QPalette.ColorRole.Window, QColor(53, 53, 53))
-            dark_palette.setColor(QPalette.ColorRole.WindowText, Qt.GlobalColor.white)
-            dark_palette.setColor(QPalette.ColorRole.Base, QColor(25, 25, 25))
-            dark_palette.setColor(QPalette.ColorRole.AlternateBase, QColor(53, 53, 53))
-            dark_palette.setColor(QPalette.ColorRole.ToolTipBase, Qt.GlobalColor.white)
-            dark_palette.setColor(QPalette.ColorRole.ToolTipText, Qt.GlobalColor.white)
-            dark_palette.setColor(QPalette.ColorRole.Text, Qt.GlobalColor.white)
-            dark_palette.setColor(QPalette.ColorRole.Button, QColor(53, 53, 53))
-            dark_palette.setColor(QPalette.ColorRole.ButtonText, Qt.GlobalColor.white)
-            dark_palette.setColor(QPalette.ColorRole.BrightText, Qt.GlobalColor.red)
-            dark_palette.setColor(QPalette.ColorRole.Link, QColor(42, 130, 218))
+        # Gắn toggle vào frame đã tạo trong Qt Designer (đảm bảo self.frame là QFrame)
+        layout = QVBoxLayout()
+        layout.addWidget(toggle)
 
-            QApplication.setStyle("Fusion")
-            QApplication.setPalette(dark_palette)
-            self.dark_mode = True
-        else:
-            # Quay lại light mode mặc định
-            QApplication.setPalette(QApplication.style().standardPalette())
-            self.dark_mode = False
-
+        # Gắn layout cho frame
+        self.frame.setLayout(layout)

@@ -293,7 +293,7 @@ border-radius: 5px</string>
                    <string notr="true">background-color: #e2e2a9;
 border-radius: 5px</string>
                   </property>
-                  <widget class="QLabel" name="label_12">
+                  <widget class="QLabel" name="label_1">
                    <property name="geometry">
                     <rect>
                      <x>7</x>
