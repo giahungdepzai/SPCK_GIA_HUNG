@@ -91,7 +91,7 @@ border-radius: 10px</string>
               <string notr="true">background-color: #aaaa7f;
 border-radius: 5px</string>
              </property>
-             <widget class="QStackedWidget" name="stackedWidget">
+             <widget class="QStackedWidget" name="foodlist">
               <property name="geometry">
                <rect>
                 <x>10</x>
@@ -128,7 +128,7 @@ border-radius: 5px</string>
                    <string notr="true">background-color: #e2e2a9;
 border-radius: 5px</string>
                   </property>
-                  <widget class="QLabel" name="label_5">
+                  <widget class="QLabel" name="label_9">
                    <property name="geometry">
                     <rect>
                      <x>7</x>
@@ -147,7 +147,7 @@ border-radius: 5px</string>
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap>../img/food.png</pixmap>
+                    <pixmap>../img/home.png</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -161,7 +161,7 @@ border-radius: 5px</string>
                    <string notr="true">background-color: #e2e2a9;
 border-radius: 5px</string>
                   </property>
-                  <widget class="QLabel" name="label_8">
+                  <widget class="QLabel" name="btnEdit">
                    <property name="geometry">
                     <rect>
                      <x>7</x>
@@ -194,7 +194,7 @@ border-radius: 5px</string>
                    <string notr="true">background-color: #e2e2a9;
 border-radius: 5px</string>
                   </property>
-                  <widget class="QLabel" name="label_9">
+                  <widget class="QLabel" name="btnAdd">
                    <property name="geometry">
                     <rect>
                      <x>7</x>
@@ -213,7 +213,7 @@ border-radius: 5px</string>
                     <string/>
                    </property>
                    <property name="pixmap">
-                    <pixmap>../img/home.png</pixmap>
+                    <pixmap>../img/food.png</pixmap>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -260,7 +260,7 @@ border-radius: 5px</string>
                    <string notr="true">background-color: #e2e2a9;
 border-radius: 5px</string>
                   </property>
-                  <widget class="QLabel" name="label_11">
+                  <widget class="QLabel" name="btnDelete">
                    <property name="geometry">
                     <rect>
                      <x>7</x>

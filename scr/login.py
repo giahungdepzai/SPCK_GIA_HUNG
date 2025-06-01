@@ -38,12 +38,12 @@ class Login(QMainWindow):
             for account in data["accounts"]:
                 if account["username"] == username and account["password"] == password:
                     # Nếu thông tin đúng, lưu tài khoản hiện tại vào file current_account.json
-                    with open("code/current_account.json", "w") as file:
+                    with open("scr/current_account.json", "w") as file:
                         json.dump({"current_account": username}, file, indent=4)
 
                     # Mở cửa sổ Home
-                    from homepage import Home
-                    self.homewindow = Home()
+                    from homepage import HomePage
+                    self.homewindow = HomePage()
                     self.homewindow.show()
                     self.close()
                     return
