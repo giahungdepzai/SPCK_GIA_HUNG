@@ -10,7 +10,7 @@ class Login(QMainWindow):
         uic.loadUi("./gui/dang_nhap.ui", self)
         
         self.btn_register.clicked.connect(self.OpenRegisterForm)
-        self.btnLogin.clicked.connect(self.Login)
+        self.btnLogin.clicked.connect(self.xu_ly_dang_nhap)
         self.registerWindow = None
         self.homePageWindow = None
         
@@ -26,12 +26,12 @@ class Login(QMainWindow):
 
     def xu_ly_dang_nhap(self):
         """Xử lý đăng nhập bằng cách kiểm tra thông tin tài khoản"""
-        username = self.txtUsername.text()
-        password = self.txtpass.text()
+        username = self.txtEmail.text()
+        password = self.txtPassword.text()
 
         try:
             # Đọc file JSON chứa danh sách tài khoản
-            with open("code/account.json", "r") as file:
+            with open("scr/account.json", "r") as file:
                 data = json.load(file)
 
             # Duyệt qua tất cả các tài khoản trong danh sách
