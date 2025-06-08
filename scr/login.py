@@ -30,14 +30,11 @@ class Login(QMainWindow):
         password = self.txtPassword.text()
 
         try:
-            # Đọc file JSON chứa danh sách tài khoản
             with open("scr/account.json", "r") as file:
                 data = json.load(file)
 
-            # Duyệt qua tất cả các tài khoản trong danh sách
             for account in data["accounts"]:
                 if account["username"] == username and account["password"] == password:
-                    # Nếu thông tin đúng, lưu tài khoản hiện tại vào file current_account.json
                     with open("scr/current_account.json", "w") as file:
                         json.dump({"current_account": username}, file, indent=4)
 
@@ -48,7 +45,6 @@ class Login(QMainWindow):
                     self.close()
                     return
 
-            # Nếu không tìm thấy tài khoản phù hợp
             QMessageBox.critical(self, "Lỗi", "Sai tên đăng nhập hoặc mật khẩu")
         except FileNotFoundError:
             QMessageBox.critical(self, "Lỗi", "Không tìm thấy file account.json")
